@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cignacmb.demo.web.dao.biz.DemoInfoDao">
+
+  <resultMap id="BaseMap" type="com.cignacmb.demo.web.model.DemoInfo">
+     <result  column="id" property="id"/>
+     <result  column="demo_name"  property="demoName"/>
+     <result column="demo_type" property="demoType"/>
+  </resultMap>
+  
+<select id="getDemoInfoList" resultMap="BaseMap">
+  select * from demo_info
+</select>
+
+</mapper>

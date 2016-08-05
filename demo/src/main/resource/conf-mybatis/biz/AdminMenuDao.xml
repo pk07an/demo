@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cignacmb.demo.dao.AdminMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.cignacmb.demo.bo.AdminMenu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="menu_id" property="menuId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="NVARCHAR" />
+    <result column="url" property="url" jdbcType="NVARCHAR" />
+    <result column="menu_order" property="menuOrder" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="role" property="role" jdbcType="NVARCHAR" />
+    <result column="description" property="description" jdbcType="NVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, menu_id, parent_id, name, url, menu_order, create_time, update_time, role, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+    <select id="getAdminMenuByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_menu
+    where name = #{menuName,jdbcType=NVARCHAR}
+  </select>
+  
+   <select id="getChildrenByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_menu
+    where parent_id = #{menuId,jdbcType=NVARCHAR}
+  </select>
+  
+  <select id="getAdminMenuByMenuId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_menu
+    where menu_id = #{menuId,jdbcType=NVARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from admin_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+    <delete id="deleteAdminMenuByMenuId" parameterType="java.lang.Long" >
+    delete from admin_menu
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cignacmb.demo.bo.AdminMenu" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY as column_name
+    </selectKey>
+    insert into admin_menu (menu_id, parent_id, name, 
+      url, menu_order, create_time, 
+      update_time, role, description
+      )
+    values (#{menuId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=NVARCHAR}, 
+      #{url,jdbcType=NVARCHAR}, #{menuOrder,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{role,jdbcType=NVARCHAR}, #{description,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertAdminMenu" parameterType="com.cignacmb.demo.bo.AdminMenu" >
+    insert into admin_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="menuOrder != null" >
+        menu_order,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=NVARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=NVARCHAR},
+      </if>
+      <if test="menuOrder != null" >
+        #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=NVARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateAdminMenu" parameterType="com.cignacmb.demo.bo.AdminMenu" >
+    update admin_menu
+    <set >
+      <if test="menuId != null" >
+        menu_id = #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=NVARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=NVARCHAR},
+      </if>
+      <if test="menuOrder != null" >
+        menu_order = #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=NVARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAdminMenuList" resultMap="BaseResultMap">
+     select * from admin_menu
+  </select>
+</mapper>

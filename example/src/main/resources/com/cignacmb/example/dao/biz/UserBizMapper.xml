@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cignacmb.example.dao.biz.UserBizMapper">
+	<resultMap id="BaseResultMap" type="com.cignacmb.example.model.UserModel">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, password, name, CREATE_DATE
+	</sql>
+	<select id="checkExistByNameAndPassword" resultType="java.lang.Integer"
+		parameterType="java.util.HashMap">
+		select
+		count(*)
+		from user
+		where name = #{name,jdbcType=VARCHAR}
+		and password = #{password,jdbcType=VARCHAR}
+	</select>
+	<select id="checkExistByName" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		select
+		count(*)
+		from user
+		where name = #{name,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from user
+	</select>
+</mapper>

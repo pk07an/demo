@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+
+  <resultMap id="BaseMap" class="com.cignacmb.demo.web.model.CronTriggerInfo">
+     <result  column="TRIGGER_NAME" property="triggerName"/>
+     <result  column="TRIGGER_GROUP"  property="triggerGroup"/>
+     <result column="CRON_EXPRESSION" property="cronExpression"/>
+     <result column="TIME_ZONE_ID" property="timeZoneId"/>
+  </resultMap>
+
+<select id="t_my_ibatis.getCronTriggerList"  resultMap="BaseMap">
+	select * from QRTZ_CRON_TRIGGERS
+</select>
+</sqlMap>

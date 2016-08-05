@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-autowire="byName">
+	
+	<!-- 读取配置文件 -->
+	<context:property-placeholder location="classpath:config_${config_env}.properties" ignore-unresolvable="true"  /> 
+
+	<!-- 自动扫描Bean -->
+	<context:component-scan base-package="com.cignacmb">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	
+	<!-- 配置数据源 -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>${DBDriver}</value>
+		</property>
+		<property name="url">
+			<value>${DBUrl}</value>
+		</property>
+		<property name="username">
+			<value>${userName}</value>
+		</property>
+		<property name="password">
+			<value>${password}</value>
+		</property>
+	</bean>
+	
+	<!-- 配置SqlSessionFactory对象，注意这里的名字 -->
+	<bean id="sqlSessionFactoryBeanName" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds" /><!--数据源 -->
+		<property name="configLocation" value="classpath:conf-mybatis/mybatis-config.xml" />
+	</bean>
+	
+	<!-- 配置SqlSession对象 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+          <constructor-arg ref="sqlSessionFactoryBeanName" />
+     </bean>
+	
+	<!-- Mapper的扫描文件 -->
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage"
+        value="com.cignacmb.demo.dao" />
+    </bean>
+    
+    
+     <!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+    	<property name="dataSource" ref="ds" />  
+	</bean> 
+	
+	<!-- 配置的传播特性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="select*" propagation="SUPPORTS" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- AOP配置 -->
+	<aop:config>
+		<aop:pointcut id="services" expression="execution(* com.cignacmb.demo.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="services" />
+	</aop:config>
+	
+
+	<bean id="multipartResolver"  
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- set the max upload size100MB -->  
+        <property name="maxUploadSize">  
+            <value>104857600</value>  
+        </property>  
+        <property name="maxInMemorySize">  
+            <value>4096</value>  
+        </property>  
+    </bean> 
+    
+    
+    <!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->  
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">  
+        <!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->  
+        <property name="connectionFactory" ref="connectionFactory"/>  
+    </bean>  
+      
+    <!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供-->  
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">  
+        <property name="brokerURL" value="tcp://localhost:61616"/>  
+    </bean>  
+      
+    <!-- Spring用于管理真正的ConnectionFactory的ConnectionFactory -->  
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">  
+        <!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+        <property name="targetConnectionFactory" ref="targetConnectionFactory"/>  
+    </bean>
+      
+    <!--这个是队列目的地-->  
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">  
+        <constructor-arg>  
+            <value>queue</value>
+        </constructor-arg>  
+    </bean>  
+    <!-- 消息监听器 -->  
+    <bean id="consumerMessageListener" class="com.cignacmb.demo.jms.ConsumerMessageListener"/>  
+    <!-- 消息监听容器 -->  
+    <bean id="jmsContainer"  
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <property name="destination" ref="queueDestination" />  
+        <property name="messageListener" ref="consumerMessageListener" />  
+    </bean>
+	
+</beans>

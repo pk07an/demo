@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cignacmb.demo.dao.AdminUserMapper" >
+  <resultMap id="BaseResultMap" type="com.cignacmb.demo.bo.AdminUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="NVARCHAR" />
+    <result column="password" property="password" jdbcType="NVARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="role" property="role" jdbcType="NVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_name, password, create_time, update_time, role
+  </sql>
+  <select id="getAdminUserById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteAdminUserById" parameterType="java.lang.Long" >
+    delete from admin_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cignacmb.demo.bo.AdminUser" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY as column_name
+    </selectKey>
+    insert into admin_user (user_name, password, create_time, 
+      update_time, role)
+    values (#{userName,jdbcType=NVARCHAR}, #{password,jdbcType=NVARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{role,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertAdminUser" parameterType="com.cignacmb.demo.bo.AdminUser" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY as column_name
+    </selectKey>
+    insert into admin_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userName != null" >
+        #{userName,jdbcType=NVARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=NVARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateAdminUser" parameterType="com.cignacmb.demo.bo.AdminUser" >
+    update admin_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=NVARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=NVARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cignacmb.demo.bo.AdminUser" >
+    update admin_user
+    set user_name = #{userName,jdbcType=NVARCHAR},
+      password = #{password,jdbcType=NVARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=NVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAdminUserByName" parameterType="java.util.Map" resultMap="BaseResultMap" >
+  	select * from admin_user where user_name=#{userName}
+  	 <if test="password != null">  
+        and password = #{password}
+    </if>
+  </select>
+  
+  <select id="getAdminUserList" resultMap="BaseResultMap" parameterType="java.util.Map">
+      select * from admin_user where 1=1
+      <if test="userName != null">
+         and user_name like '%${userName}%'
+      </if>
+  </select>
+</mapper>

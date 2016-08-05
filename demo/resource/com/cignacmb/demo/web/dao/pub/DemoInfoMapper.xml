@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cignacmb.demo.web.dao.pub.DemoInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.cignacmb.demo.web.model.DemoInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="demo_name" property="demoName" jdbcType="NVARCHAR" />
+    <result column="demo_type" property="demoType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, demo_name, demo_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from demo_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from demo_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cignacmb.demo.web.model.DemoInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY as column_name
+    </selectKey>
+    insert into demo_info (demo_name, demo_type)
+    values (#{demoName,jdbcType=NVARCHAR}, #{demoType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cignacmb.demo.web.model.DemoInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY as column_name
+    </selectKey>
+    insert into demo_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="demoName != null" >
+        demo_name,
+      </if>
+      <if test="demoType != null" >
+        demo_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="demoName != null" >
+        #{demoName,jdbcType=NVARCHAR},
+      </if>
+      <if test="demoType != null" >
+        #{demoType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cignacmb.demo.web.model.DemoInfo" >
+    update demo_info
+    <set >
+      <if test="demoName != null" >
+        demo_name = #{demoName,jdbcType=NVARCHAR},
+      </if>
+      <if test="demoType != null" >
+        demo_type = #{demoType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cignacmb.demo.web.model.DemoInfo" >
+    update demo_info
+    set demo_name = #{demoName,jdbcType=NVARCHAR},
+      demo_type = #{demoType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

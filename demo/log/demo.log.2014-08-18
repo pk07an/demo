@@ -1,0 +1,134 @@
+INFO [main] ContextLoader || Root WebApplicationContext: initialization started
+INFO [main] XmlWebApplicationContext || Refreshing Root WebApplicationContext: startup date [Mon Aug 18 17:10:02 CST 2014]; root of context hierarchy
+INFO [main] XmlBeanDefinitionReader || Loading XML bean definitions from class path resource [conf-spring/applicationContext.xml]
+INFO [main] XmlBeanDefinitionReader || Loading XML bean definitions from class path resource [conf-spring/applicationContext-quartz.xml]
+INFO [main] PropertyPlaceholderConfigurer || Loading properties file from class path resource [config.properties]
+INFO [main] DefaultListableBeanFactory || Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1305bf8: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,demoExceptionHandler,loginInterceptor,demoJob1,demoJob2,jobManager,cronTriggerInfoDao,demoInfoDao,demoService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,ds,sqlSessionFactoryBeanName,sqlSession,org.mybatis.spring.mapper.MapperScannerConfigurer#0,transactionManager,txAdvice,org.springframework.aop.config.internalAutoProxyCreator,services,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,quartzScheduler,trigger1,jobDetail1,trigger2,jobDetail2,org.springframework.context.annotation.ConfigurationClassPostProcessor$ImportAwareBeanPostProcessor#0,cronTriggerInfoMapper,demoInfoMapper]; root of factory hierarchy
+INFO [main] SchedulerFactoryBean || Loading Quartz config from [class path resource [quartz.properties]]
+INFO [main] SimpleThreadPool || Job execution threads will use class loader of thread: main
+INFO [main] SchedulerSignalerImpl || Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+INFO [main] QuartzScheduler || Quartz Scheduler v.1.8.0 created.
+INFO [main] LocalDataSourceJobStore || Using db table-based data access locking (synchronization).
+INFO [main] LocalDataSourceJobStore || JobStoreCMT initialized.
+INFO [main] QuartzScheduler || Scheduler meta-data: Quartz Scheduler (v1.8.0) 'quartzScheduler' with instanceId 'sziy10291408353006108'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+INFO [main] StdSchedulerFactory || Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+INFO [main] StdSchedulerFactory || Quartz scheduler version: 1.8.0
+INFO [main] QuartzScheduler || JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@13efafd
+INFO [Timer-0] UpdateChecker || New Quartz update(s) found: 1.8.5 [http://www.terracotta.org/kit/reflector?kitID=default&pageID=QuartzChangeLog]
+INFO [main] DefaultLifecycleProcessor || Starting beans in phase 2147483647
+INFO [main] SchedulerFactoryBean || Starting Quartz Scheduler now
+INFO [main] LocalDataSourceJobStore || ClusterManager: detected 1 failed or restarted instances.
+INFO [main] LocalDataSourceJobStore || ClusterManager: Scanning for instance "SZIY06091407397583535"'s failed in-progress jobs.
+INFO [main] LocalDataSourceJobStore || ClusterManager: ......Freed 1 acquired trigger(s).
+INFO [main] QuartzScheduler || Scheduler quartzScheduler_$_sziy10291408353006108 started.
+INFO [main] ContextLoader || Root WebApplicationContext: initialization completed in 6029 ms
+INFO [main] DispatcherServlet || FrameworkServlet 'dispatcherservlet': initialization started
+INFO [main] XmlWebApplicationContext || Refreshing WebApplicationContext for namespace 'dispatcherservlet-servlet': startup date [Mon Aug 18 17:10:08 CST 2014]; parent: Root WebApplicationContext
+INFO [main] XmlBeanDefinitionReader || Loading XML bean definitions from class path resource [conf-spring/applicationContext-mvc.xml]
+INFO [main] PropertyPlaceholderConfigurer || Loading properties file from class path resource [config.properties]
+INFO [main] DefaultListableBeanFactory || Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1a915ec: defining beans [demoExceptionHandler,loginInterceptor,demoJob1,demoJob2,jobManager,demoController,cronTriggerInfoDao,demoInfoDao,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,viewResolver,mappingJacksonHttpMessageConverter,org.springframework.context.annotation.ConfigurationClassPostProcessor$ImportAwareBeanPostProcessor#0]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@1305bf8
+INFO [main] DefaultListableBeanFactory || Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1a915ec: defining beans [demoExceptionHandler,loginInterceptor,demoJob1,demoJob2,jobManager,demoController,cronTriggerInfoDao,demoInfoDao,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,viewResolver,mappingJacksonHttpMessageConverter,org.springframework.context.annotation.ConfigurationClassPostProcessor$ImportAwareBeanPostProcessor#0]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@1305bf8
+ERROR [main] DispatcherServlet || Context initialization failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jobManager': Invocation of init method failed; nested exception is org.quartz.JobPersistenceException: Couldn't store trigger 'trigger2' for 'jobDetail2' job:违反了 PRIMARY KEY 约束 'PK__QRTZ_TRIGGERS__09DE7BCC'。不能在对象 'QRTZ_TRIGGERS' 中插入重复键。 [See nested exception: com.microsoft.sqlserver.jdbc.SQLServerException: 违反了 PRIMARY KEY 约束 'PK__QRTZ_TRIGGERS__09DE7BCC'。不能在对象 'QRTZ_TRIGGERS' 中插入重复键。]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:135)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:394)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1448)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:456)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:294)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:225)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:291)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:585)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:913)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:464)
+	at org.springframework.web.servlet.FrameworkServlet.configureAndRefreshWebApplicationContext(FrameworkServlet.java:631)
+	at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:588)
+	at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:645)
+	at org.springframework.web.servlet.FrameworkServlet.initWebApplicationContext(FrameworkServlet.java:508)
+	at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:449)
+	at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:133)
+	at javax.servlet.GenericServlet.init(GenericServlet.java:212)
+	at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:1206)
+	at org.apache.catalina.core.StandardWrapper.load(StandardWrapper.java:1026)
+	at org.apache.catalina.core.StandardContext.loadOnStartup(StandardContext.java:4421)
+	at org.apache.catalina.core.StandardContext.start(StandardContext.java:4734)
+	at org.apache.catalina.core.ContainerBase.start(ContainerBase.java:1057)
+	at org.apache.catalina.core.StandardHost.start(StandardHost.java:840)
+	at org.apache.catalina.core.ContainerBase.start(ContainerBase.java:1057)
+	at org.apache.catalina.core.StandardEngine.start(StandardEngine.java:463)
+	at org.apache.catalina.startup.Embedded.start(Embedded.java:825)
+	at org.apache.tomcat.maven.plugin.tomcat6.AbstractRunMojo.startContainer(AbstractRunMojo.java:767)
+	at org.apache.tomcat.maven.plugin.tomcat6.AbstractRunMojo.execute(AbstractRunMojo.java:353)
+	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:101)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:209)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:84)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:59)
+	at org.apache.maven.lifecycle.internal.LifecycleStarter.singleThreadedBuild(LifecycleStarter.java:183)
+	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:161)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:320)
+	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:156)
+	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:537)
+	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:196)
+	at org.apache.maven.cli.MavenCli.main(MavenCli.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:290)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:230)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:409)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:352)
+Caused by: org.quartz.JobPersistenceException: Couldn't store trigger 'trigger2' for 'jobDetail2' job:违反了 PRIMARY KEY 约束 'PK__QRTZ_TRIGGERS__09DE7BCC'。不能在对象 'QRTZ_TRIGGERS' 中插入重复键。 [See nested exception: com.microsoft.sqlserver.jdbc.SQLServerException: 违反了 PRIMARY KEY 约束 'PK__QRTZ_TRIGGERS__09DE7BCC'。不能在对象 'QRTZ_TRIGGERS' 中插入重复键。]
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.storeTrigger(JobStoreSupport.java:1245)
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.replaceTrigger(JobStoreSupport.java:1510)
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport$9.execute(JobStoreSupport.java:1484)
+	at org.quartz.impl.jdbcjobstore.JobStoreCMT.executeInLock(JobStoreCMT.java:242)
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.replaceTrigger(JobStoreSupport.java:1480)
+	at org.quartz.core.QuartzScheduler.rescheduleJob(QuartzScheduler.java:973)
+	at org.quartz.impl.StdScheduler.rescheduleJob(StdScheduler.java:302)
+	at com.cignacmb.demo.quartz.JobManager.start(JobManager.java:45)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:346)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:299)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:132)
+	... 50 more
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: 违反了 PRIMARY KEY 约束 'PK__QRTZ_TRIGGERS__09DE7BCC'。不能在对象 'QRTZ_TRIGGERS' 中插入重复键。
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:197)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1493)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:390)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:340)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:4575)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:1400)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:179)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:154)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeUpdate(SQLServerPreparedStatement.java:308)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:105)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:105)
+	at org.quartz.impl.jdbcjobstore.StdJDBCDelegate.insertTrigger(StdJDBCDelegate.java:1105)
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.storeTrigger(JobStoreSupport.java:1233)
+	... 64 more
+INFO [http-8888-1] DispatcherServlet || FrameworkServlet 'dispatcherservlet': initialization started
+INFO [http-8888-1] XmlWebApplicationContext || Refreshing WebApplicationContext for namespace 'dispatcherservlet-servlet': startup date [Mon Aug 18 17:10:36 CST 2014]; parent: Root WebApplicationContext
+INFO [http-8888-1] XmlBeanDefinitionReader || Loading XML bean definitions from class path resource [conf-spring/applicationContext-mvc.xml]
+INFO [http-8888-1] PropertyPlaceholderConfigurer || Loading properties file from class path resource [config.properties]
+INFO [http-8888-1] DefaultListableBeanFactory || Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7123aa: defining beans [demoExceptionHandler,loginInterceptor,demoJob1,demoJob2,jobManager,demoController,cronTriggerInfoDao,demoInfoDao,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,viewResolver,mappingJacksonHttpMessageConverter,org.springframework.context.annotation.ConfigurationClassPostProcessor$ImportAwareBeanPostProcessor#0]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@1305bf8
+INFO [http-8888-1] DefaultAnnotationHandlerMapping || Mapped URL path [/demo.xhtml] onto handler 'demoController'
+INFO [http-8888-1] DefaultAnnotationHandlerMapping || Mapped URL path [/demo_sync.json] onto handler 'demoController'
+INFO [http-8888-1] DefaultAnnotationHandlerMapping || Mapped URL path [/demo_list.json] onto handler 'demoController'
+INFO [http-8888-1] DefaultAnnotationHandlerMapping || Mapped URL path [/is_transaction.json] onto handler 'demoController'
+INFO [http-8888-1] DispatcherServlet || FrameworkServlet 'dispatcherservlet': initialization completed in 1343 ms
+INFO [http-8888-1] LoginInterceptor || userName=[ads]
+ERROR [http-8888-1] LoginInterceptor || userName is not match password!
